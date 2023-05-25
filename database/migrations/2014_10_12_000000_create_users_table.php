@@ -9,23 +9,30 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('username')->unique();
             $table->string('password');
-            $table->rememberToken();
+            $table->string('role');
+            $table->unsignedBigInteger('related_id')->nullable();
             $table->timestamps();
+
+            // Additional columns specific to your application
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('email');
+            $table->string('phone_number');
+
+            // Foreign key relationships
+            $table->foreign('related_id')->references('id')->on('students')->onDelete('cascade');
+            $table->foreign('related_id')->references('id')->on('courses')->onDelete('cascade');
+            $table->foreign('related_id')->references('id')->on('teachers')->onDelete('cascade');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('users');
     }
