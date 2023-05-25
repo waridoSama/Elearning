@@ -16,7 +16,9 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('password');
             $table->string('role');
-            $table->unsignedBigInteger('related_id')->nullable();
+            $table->unsignedBigInteger('student_id')->nullable();
+            $table->unsignedBigInteger('teacher_id')->nullable();
+            $table->unsignedBigInteger('course_id')->nullable();
             $table->timestamps();
 
             // Additional columns specific to your application
@@ -26,9 +28,9 @@ return new class extends Migration
             $table->string('phone_number');
 
             // Foreign key relationships
-            $table->foreign('related_id')->references('id')->on('students')->onDelete('cascade');
-            $table->foreign('related_id')->references('id')->on('courses')->onDelete('cascade');
-            $table->foreign('related_id')->references('id')->on('teachers')->onDelete('cascade');
+            $table->foreign('student_id','student_fk')->references('student_id')->on('students')->onDelete('cascade');
+            $table->foreign('course_id','course_fk')->references('course_id')->on('courses')->onDelete('cascade');
+            $table->foreign('teacher_id','teacher_fk')->references('teacher_id')->on('teachers')->onDelete('cascade');
         });
     }
 
