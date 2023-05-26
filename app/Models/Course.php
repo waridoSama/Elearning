@@ -12,4 +12,14 @@ class Course extends Model
         'course_name',
         'course_description',
     ];
+
+    public function students()
+    {
+        return $this->belongsToMany(Student::class, 'student_courses');
+    }
+
+    public function teachers()
+    {
+        return $this->belongsToMany(Teacher::class, 'teacher_courses');
+    }
 }
