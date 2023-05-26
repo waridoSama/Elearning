@@ -13,7 +13,9 @@ class CourseController extends Controller
      */
     public function index()
     {
-        //
+        $courses = Course::all();
+
+        return view('courses.index', compact('courses'));
     }
 
     /**
@@ -21,7 +23,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        return view('courses.create');
     }
 
     /**
@@ -29,7 +31,14 @@ class CourseController extends Controller
      */
     public function store(StoreCourseRequest $request)
     {
-        //
+        $data = $request->validate([
+            'course_name' => 'required',
+            'course_description' => 'required',
+        ]);
+
+        Course::create($data);
+
+        return redirect()->route('courses.index')->with('success', 'Course created successfully.');
     }
 
     /**
@@ -45,7 +54,7 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        //
+        return view('courses.edit', compact('course'));
     }
 
     /**
@@ -53,7 +62,14 @@ class CourseController extends Controller
      */
     public function update(UpdateCourseRequest $request, Course $course)
     {
-        //
+        $data = $request->validate([
+            'course_name' => 'required',
+            'course_description' => 'required',
+        ]);
+
+        $course->update($data);
+
+        return redirect()->route('courses.index')->with('success', 'Course updated successfully.');
     }
 
     /**
@@ -61,6 +77,8 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-        //
+        $course->delete();
+
+        return redirect()->route('courses.index')->with('success', 'Course deleted successfully.');
     }
 }
