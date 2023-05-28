@@ -17,8 +17,8 @@ return new class extends Migration
             $table->timestamps();
 
             // Define foreign key constraints
-            $table->foreign('teacher_id')->references('teacher_id')->on('teachers')->onDelete('cascade');
-            $table->foreign('course_id')->references('course_id')->on('courses')->onDelete('cascade');
+            $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
 
             // Add unique constraint to prevent duplicate student-course combinations
             $table->unique(['teacher_id', 'course_id']);

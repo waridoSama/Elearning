@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\StudentController;
+use App\Models\Student;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,17 +16,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts.layout');
 });
 
 // Student routes
-Route::get('/students', 'App\Http\Controllers\StudentController@index')->name('students.index');
+Route::resource('students',StudentController::class);
+/*Route::get('/students', 'App\Http\Controllers\StudentController@index')->name('students.index');
 Route::get('/students/create', 'App\Http\Controllers\StudentController@create')->name('students.create');
 Route::post('/students', 'App\Http\Controllers\StudentController@store')->name('students.store');
 Route::get('/students/{student}', 'App\Http\Controllers\StudentController@show')->name('students.show');
 Route::get('/students/{student}/edit', 'App\Http\Controllers\StudentController@edit')->name('students.edit');
 Route::put('/students/{student}', 'App\Http\Controllers\StudentController@update')->name('students.update');
-Route::delete('/students/{student}', 'App\Http\Controllers\StudentController@destroy')->name('students.destroy');
+Route::delete('/students/{student}', 'App\Http\Controllers\StudentController@destroy')->name('students.destroy');*/
 
 // Course routes
 Route::get('/courses', 'App\Http\Controllers\CourseController@index')->name('courses.index');
@@ -45,10 +48,14 @@ Route::put('/teachers/{teacher}', 'App\Http\Controllers\TeacherController@update
 Route::delete('/teachers/{teacher}', 'App\Http\Controllers\TeacherController@destroy')->name('teachers.destroy');
 
 // User routes
-Route::get('/users', 'App\Http\Controllers\UserController@index')->name('users.index');
+/*Route::get('/users', 'App\Http\Controllers\UserController@index')->name('users.index');
 Route::get('/users/create', 'App\Http\Controllers\UserController@create')->name('users.create');
 Route::post('/users', 'App\Http\Controllers\UserController@store')->name('users.store');
 Route::get('/users/{user}', 'App\Http\Controllers\UserController@show')->name('users.show');
 Route::get('/users/{user}/edit', 'App\Http\Controllers\UserController@edit')->name('users.edit');
 Route::put('/users/{user}', 'App\Http\Controllers\UserController@update')->name('users.update');
-Route::delete('/users/{user}', 'App\Http\Controllers\UserController@destroy')->name('users.destroy');
+Route::delete('/users/{user}', 'App\Http\Controllers\UserController@destroy')->name('users.destroy');*/
+
+Route::get('/main',function(){
+    return view('layouts.layout');
+});

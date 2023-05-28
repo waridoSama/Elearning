@@ -38,7 +38,8 @@ class TeacherController extends Controller
             'phone_number' => 'required',
         ]);
 
-        Teacher::create($data);
+        $teacher=Teacher::create($data);
+        $teacher->courses()->attach($request->input('courses'));
 
         return redirect()->route('techers.index')->with('success', 'Teacher created successfully.');
     }
@@ -57,6 +58,7 @@ class TeacherController extends Controller
      */
     public function edit(Teacher $teacher)
     {
+        $teacher->load('courses');
         return view('teachers.edit', compact('teacher'));
     }
 
@@ -74,6 +76,8 @@ class TeacherController extends Controller
         ]);
 
         $teacher->update($data);
+        // Sync courses
+        $teacher->courses()->sync($request->input('courses'));
 
         return redirect()->route('teachers.index')->with('success', 'Teacher updated successfully.');
     }
@@ -83,6 +87,7 @@ class TeacherController extends Controller
      */
     public function destroy(Teacher $teacher)
     {
+        $teacher->courses()->detach(); // Detach courses
         $teacher->delete();
 
         return redirect()->route('teachers.index')->with('success', 'Teachers deleted successfully.');

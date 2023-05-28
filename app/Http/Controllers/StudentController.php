@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
+use App\Models\Course;
+use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
@@ -23,13 +25,14 @@ class StudentController extends Controller
      */
     public function create()
     {
-        return view('students.create');
+        $courses = Course::all();
+        return view('students.create',compact('courses'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreStudentRequest $request)
+    public function store(Request $request)
     {
         $data = $request->validate([
             'first_name' => 'required',
@@ -39,7 +42,8 @@ class StudentController extends Controller
             'phone_number' => 'required',
         ]);
 
-        Student::create($data);
+        $student=Student::create($data);
+        $student->courses()->attach($request->input('courses'));
 
         return redirect()->route('students.index')->with('success', 'Student created successfully.');
     }
@@ -47,25 +51,29 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Student $student)
+    public function show($id)
     {
+        $student=Student::findOrFail($id);
+        $student->load('courses');
         return view('students.show', compact('student'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Student $student)
+    public function edit($id)
     {
-        $student->load('courses');
-        return view('students.edit', compact('student'));
+        $student=Student::findOrFail($id);
+        $courses=Course::all();
+        return view('students.edit', compact('student','courses'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateStudentRequest $request, Student $student)
+    public function update(Request $request, $id)
     {
+        $student=Student::findOrFail($id);
         $data = $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
@@ -75,6 +83,8 @@ class StudentController extends Controller
         ]);
 
         $student->update($data);
+        // Sync courses
+        $student->courses()->sync($request->input('courses'));
 
         return redirect()->route('students.index')->with('success', 'Student updated successfully.');
     }
@@ -82,8 +92,10 @@ class StudentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Student $student)
+    public function destroy($id)
     {
+        $student=Student::findOrFail($id);
+        $student->courses()->detach(); // Detach courses
         $student->delete();
 
         return redirect()->route('students.index')->with('success', 'Student deleted successfully.');

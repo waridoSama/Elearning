@@ -28,9 +28,9 @@ return new class extends Migration
             $table->string('phone_number');
 
             // Foreign key relationships
-            $table->foreign('student_id','student_fk')->references('student_id')->on('students')->onDelete('cascade');
-            $table->foreign('course_id','course_fk')->references('course_id')->on('courses')->onDelete('cascade');
-            $table->foreign('teacher_id','teacher_fk')->references('teacher_id')->on('teachers')->onDelete('cascade');
+            $table->foreign('student_id','student_fk')->references('id')->on('students')->onDelete('cascade');
+            $table->foreign('course_id','course_fk')->references('id')->on('courses')->onDelete('cascade');
+            $table->foreign('teacher_id','teacher_fk')->references('id')->on('teachers')->onDelete('cascade');
         });
     }
 
