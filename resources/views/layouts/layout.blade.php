@@ -43,7 +43,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -52,7 +52,7 @@
             <hr class="sidebar-divider">
 
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{{route('courses.index')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Courses</span></a>
             </li>
@@ -61,7 +61,7 @@
             <hr class="sidebar-divider">
 
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{{route('students.index')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Students</span></a>
             </li>
@@ -70,7 +70,7 @@
             <hr class="sidebar-divider">
 
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{{route('teachers.index')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Teachers</span></a>
             </li>

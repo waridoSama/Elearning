@@ -9,12 +9,14 @@
 
                     <div class="card-body">
                         <h4>Course Name: {{ $course->course_name }}</h4>
-                        <p>Teacher: {{ $course->teacher->first_name.' '.$course->teacher->last_name }}</p>
+                        <p>Teacher: {{ $course->teachers[0]->last_name ?? 'N/A' }}</p>
                         <p>Students:</p>
                         <ul>
-                            @foreach ($course->students as $student)
-                                <li>{{ $student->first_name.' '.$student->last_name }}</li>
-                            @endforeach
+                            @forelse ($course->students as $student)
+                            <li>{{ $student->first_name }} {{ $student->last_name }}</li>
+                            @empty
+                                <li>No students enrolled in this course.</li>
+                            @endforelse
                         </ul>
                         <a href="{{ route('courses.index') }}" class="btn btn-secondary">Back to List</a>
                     </div>

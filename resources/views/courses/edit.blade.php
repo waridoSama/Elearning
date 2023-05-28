@@ -16,10 +16,14 @@
                                 <input type="text" name="course_name" id="course_name" class="form-control" value="{{ $course->course_name }}" required>
                             </div>
                             <div class="form-group">
+                                <label for="course_name">Course Description</label>
+                                <textarea name="course_description" id="course_description" class="form-control" required>{{ $course->course_description }}</textarea>
+                            </div>
+                            <div class="form-group">
                                 <label for="teacher_id">Teacher</label>
                                 <select name="teacher_id" id="teacher_id" class="form-control" required>
                                     @foreach ($teachers as $teacher)
-                                        <option value="{{ $teacher->id }}" {{ $teacher->id == $course->teacher_id ? 'selected' : '' }}>{{ $teacher->full_name }}</option>
+                                        <option value="{{ $teacher->id }}" {{ $teacher->id == $course->teacher_id ? 'selected' : '' }}>{{ $teacher->last_name }}</option>
                                     @endforeach
                                 </select>
                             </div>

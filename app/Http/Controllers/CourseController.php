@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
+use App\Models\Teacher;
+use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
@@ -23,13 +25,14 @@ class CourseController extends Controller
      */
     public function create()
     {
-        return view('courses.create');
+        $teachers=Teacher::all();
+        return view('courses.create',compact('teachers'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCourseRequest $request)
+    public function store(Request $request)
     {
         $data = $request->validate([
             'course_name' => 'required',
@@ -44,9 +47,11 @@ class CourseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Course $course)
+    public function show($id)
     {
-        //
+        $course = Course::with('teachers', 'students')->findOrFail($id);
+
+        return view('courses.show', compact('course'));
     }
 
     /**
@@ -54,13 +59,14 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        return view('courses.edit', compact('course'));
+        $teachers=Teacher::all();
+        return view('courses.edit', compact('course','teachers'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCourseRequest $request, Course $course)
+    public function update(Request $request, Course $course)
     {
         $data = $request->validate([
             'course_name' => 'required',

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\StudentController;
 use App\Models\Student;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -59,3 +60,7 @@ Route::delete('/users/{user}', 'App\Http\Controllers\UserController@destroy')->n
 Route::get('/main',function(){
     return view('layouts.layout');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

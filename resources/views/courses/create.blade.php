@@ -15,10 +15,14 @@
                                 <input type="text" name="course_name" id="course_name" class="form-control" required>
                             </div>
                             <div class="form-group">
+                                <label for="course_name">Course Description</label>
+                                <textarea name="course_description" id="course_description" class="form-control" required></textarea>
+                            </div>
+                            <div class="form-group">
                                 <label for="teacher_id">Teacher</label>
-                                <select name="teacher_id" id="teacher_id" class="form-control" required>
+                                <select name="teacher_id" id="teacher_id" class="form-control" multiple required>
                                     @foreach ($teachers as $teacher)
-                                        <option value="{{ $teacher->id }}">{{ $teacher->full_name }}</option>
+                                        <option value="{{ $teacher->id }}">{{ $teacher->last_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
