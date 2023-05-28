@@ -57,6 +57,7 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
+        $student->load('courses');
         return view('students.edit', compact('student'));
     }
 
