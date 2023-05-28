@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Teacher;
 use App\Http\Requests\StoreTeacherRequest;
 use App\Http\Requests\UpdateTeacherRequest;
+use App\Models\Course;
+use Illuminate\Http\Request;
 
 class TeacherController extends Controller
 {
@@ -23,13 +25,14 @@ class TeacherController extends Controller
      */
     public function create()
     {
-        return view('teachers.create');
+        $courses = Course::all();
+        return view('teachers.create',compact('courses'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTeacherRequest $request)
+    public function store(Request $request)
     {
         $data = $request->validate([
             'first_name' => 'required',
@@ -41,7 +44,7 @@ class TeacherController extends Controller
         $teacher=Teacher::create($data);
         $teacher->courses()->attach($request->input('courses'));
 
-        return redirect()->route('techers.index')->with('success', 'Teacher created successfully.');
+        return redirect()->route('teachers.index')->with('success', 'Teacher created successfully.');
     }
 
     /**
@@ -59,13 +62,14 @@ class TeacherController extends Controller
     public function edit(Teacher $teacher)
     {
         $teacher->load('courses');
-        return view('teachers.edit', compact('teacher'));
+        $courses=Course::all();
+        return view('teachers.edit', compact('teacher','courses'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTeacherRequest $request, Teacher $teacher)
+    public function update(Request $request, Teacher $teacher)
     {
         
         $data = $request->validate([
